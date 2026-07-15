@@ -6,343 +6,433 @@
 <title>5.4 Writing Remainders as Decimals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#FAF7F2; --card:#FFFFFF;
-    --ink:#2A2430; --ink-soft:#5F5568; --line:#E7DED4;
-    --plum:#6B3450; --plum-deep:#4A2338;
-    --blush:#EDD8D2; --blush-soft:#F6EBE6;
-    --green:#2E8B6A; --green-bg:#E4F1EB; --green-line:#B8DDCB;
-    --amber:#C9871F; --amber-bg:#FBF0D8; --amber-line:#EBD199;
-    --red:#CB5942;  --red-bg:#FBE6E0;  --red-line:#F0BEB0;
-    --pt:#C4462E;
-    --radius:16px;
-    --shadow:0 1px 2px rgba(42,36,48,.05), 0 10px 30px rgba(42,36,48,.06);
+    --paper:#F6F8FC;
+    --gridline:#E1E8F2;
+    --grid-strong:#CFDAEC;
+    --ink:#18233F; --ink-soft:#5A6783; --ink-faint:#8A95AD;
+    --accent:#4F46E5; --accent-deep:#3730A3;
+    --accent-soft:#EAE9FF; --accent-line:#D6D3F7;
+    --mode:#DB2777; --mode-soft:#FCE7F1; --mode-line:#F5BEDA;
+    --green:#16A34A; --green-bg:#E7F6EC; --green-line:#B7E4C6;
+    --amber:#D97706; --amber-bg:#FCF1E1; --amber-line:#F3D9AE;
+    --red:#DC2626;  --red-bg:#FBEAEA;  --red-line:#F2C2C2;
+    --card:#FFFFFF;
+    --shadow:0 1px 2px rgba(24,35,63,.05), 0 10px 30px -18px rgba(24,35,63,.25);
+    --radius:18px;
+    --maxw:880px;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    margin:0;
-    background:
-      radial-gradient(1200px 600px at 100% -10%, #F3E9E3 0%, transparent 55%),
-      radial-gradient(900px 500px at -10% 8%, #EFEAF0 0%, transparent 50%),
-      var(--paper);
-    color:var(--ink);
-    font-family:"Nunito Sans",system-ui,sans-serif;
-    font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+    margin:0; color:var(--ink); font-family:'Nunito',system-ui,-apple-system,sans-serif;
+    font-size:17px; line-height:1.6;
+    background-color:var(--paper);
+    background-image:
+      linear-gradient(var(--gridline) 1px, transparent 1px),
+      linear-gradient(90deg, var(--gridline) 1px, transparent 1px);
+    background-size:26px 26px;
+    background-position:-1px -1px;
+    -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:840px;margin:0 auto;padding:34px 22px 90px}
+  body.students .teacher-note{display:none !important}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
 
-  /* ---------- Header ---------- */
-  .eyebrow{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:.72rem;
-    letter-spacing:.16em;text-transform:uppercase;color:var(--plum);
-    display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-  .eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--blush)}
-  h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(2.1rem,6vw,3.3rem);
-    line-height:1.04;margin:.28em 0 .1em;letter-spacing:-.01em}
-  h1 .pt-mark{color:var(--pt)}
-  .subhead{color:var(--ink-soft);font-size:1.06rem;max-width:56ch;margin:.2em 0 0}
+  /* ---------- top bar ---------- */
+  header.bar{position:sticky;top:0;z-index:40;background:rgba(246,248,252,.88);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--grid-strong)}
+  .bar-inner{max-width:var(--maxw);margin:0 auto;padding:10px 20px;display:flex;
+    align-items:center;gap:14px;flex-wrap:wrap}
+  .brand{font-family:'Fredoka';font-weight:700;font-size:1.02rem;letter-spacing:.2px;
+    display:flex;align-items:center;gap:9px;margin-right:auto}
+  .brand .glyph{display:inline-grid;grid-template-columns:repeat(3,5px);gap:2px;align-items:end;height:18px}
+  .brand .glyph i{border-radius:1px;display:block;width:5px}
+  .brand .glyph i:nth-child(1){height:8px;background:var(--accent)}
+  .brand .glyph i:nth-child(2){height:16px;background:var(--green)}
+  .brand .glyph i:nth-child(3){height:12px;background:var(--mode)}
+  nav.jump{display:flex;gap:4px;flex-wrap:wrap}
+  nav.jump a{font-family:'Fredoka';font-weight:500;font-size:.82rem;text-decoration:none;
+    color:var(--ink-soft);padding:6px 10px;border-radius:999px}
+  nav.jump a:hover{color:var(--ink);background:var(--accent-soft)}
+  .tview{font-family:'Fredoka';font-weight:600;font-size:.8rem;cursor:pointer;
+    border:1.5px solid var(--accent);color:var(--accent);background:transparent;
+    padding:6px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:7px}
+  .tview .dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+  body.students .tview{border-color:var(--ink-faint);color:var(--ink-soft)}
+  body.students .tview .dot{background:var(--ink-faint)}
 
-  /* ---------- Signature stepper ---------- */
-  .signature{margin:26px 0 8px;background:var(--card);border:1px solid var(--line);
-    border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-  .sig-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
-    padding:16px 22px;border-bottom:1px solid var(--line);
-    background:linear-gradient(180deg,#fff,#FBF7F4);flex-wrap:wrap}
-  .sig-top h2{margin:0;font-family:"Fraunces",serif;font-weight:600;font-size:1.18rem}
-  .sig-top .hint{font-size:.85rem;color:var(--ink-soft)}
-  .sig-body{padding:26px 22px 22px;display:grid;gap:18px}
+  /* ---------- hero ---------- */
+  .hero{padding:54px 0 30px}
+  .eyebrow-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .eyebrow{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--accent);font-weight:700}
+  .badge{font-family:'Fredoka';font-weight:700;font-size:.72rem;padding:7px 14px;border-radius:999px;
+    border:1.5px solid var(--grid-strong);background:var(--card);color:var(--accent)}
+  .hero h1{font-family:'Fredoka';font-weight:700;line-height:1.02;
+    font-size:clamp(2.2rem,6vw,4rem);margin:.25em 0 .15em;letter-spacing:-.5px}
+  .hero h1 .mode{color:var(--mode)} .hero h1 .green{color:var(--green)}
+  .lead{font-size:1.08rem;color:var(--ink-soft);max-width:none;margin:.2em 0 1.2em}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:start;margin-top:26px}
+  @media(max-width:760px){.hero-grid{grid-template-columns:1fr}}
+  .hero-chart{background:var(--card);border:1px solid var(--grid-strong);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:16px 16px 18px;text-align:center}
+  .hero-chart .cap{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--ink-faint);
+    text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;text-align:left}
+  .hero-chart .ld{font-size:1.9rem}
+
+  .btn{font-family:'Fredoka';font-weight:600;font-size:.9rem;cursor:pointer;border-radius:10px;
+    padding:9px 16px;border:1.5px solid var(--accent);background:var(--accent);color:#fff;
+    transition:transform .1s,filter .15s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+  .btn:hover{filter:brightness(1.06)} .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;color:var(--accent)}
+  .btn.sm{font-size:.82rem;padding:7px 13px}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;align-items:center}
+
+  /* ---------- sections ---------- */
+  section{padding:38px 0;scroll-margin-top:70px}
+  .part-tag{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:.72rem;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:6px}
+  .part-tag::before{content:"";width:22px;height:2px;background:var(--accent);display:inline-block}
+  h2{font-family:'Fredoka';font-weight:700;font-size:clamp(1.6rem,3.5vw,2.3rem);
+    margin:.1em 0 .35em;letter-spacing:-.3px;line-height:1.1}
+  h3{font-family:'Fredoka';font-weight:600;font-size:1.2rem;margin:0 0 .4em}
+  .card{background:var(--card);border:1px solid var(--grid-strong);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:24px}
+  .card + .card{margin-top:18px}
+
+  .define{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:10px;
+    padding:14px 16px;font-size:1.02rem;margin-top:16px}
+  .define b{color:var(--mode)}
+  .eg{font-family:'Space Mono',monospace;background:var(--accent-soft);border-radius:6px;
+    padding:1px 7px;color:var(--accent-deep);font-weight:700;font-size:.92em;white-space:nowrap}
+
+  /* method steps */
+  ol.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px}
+  ol.steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start}
+  ol.steps li::before{content:counter(s);flex:0 0 auto;width:28px;height:28px;border-radius:8px;
+    background:var(--accent);color:#fff;font-family:'Fredoka';font-weight:700;
+    display:grid;place-items:center;font-size:.95rem}
+
+  /* ---------- success criteria ticks ---------- */
+  ul.sc{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  ul.sc li{display:flex;gap:12px;align-items:flex-start}
+  .tick{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--accent);
+    background:#fff;cursor:pointer;display:grid;place-items:center;transition:.18s;margin-top:1px}
+  .tick svg{width:15px;height:15px;stroke:#fff;stroke-width:3.2;fill:none;
+    stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:.18s}
+  .tick.done{background:var(--accent);border-color:var(--accent)}
+  .tick.done svg{opacity:1}
+  ul.sc li.done span.txt{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--accent-line)}
+
+  /* ---------- teacher note ---------- */
+  .teacher-note{background:#FFFBEA;border:1px solid #F2E2A6;border-radius:12px;
+    padding:12px 16px;margin-top:16px;font-size:.93rem;color:#6b5d18}
+  .teacher-note b{font-family:'Fredoka';color:#8a6d00}
+  .teacher-note .pill{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+    background:#8a6d00;color:#fff;padding:3px 8px;border-radius:999px;margin-right:8px;vertical-align:1px}
+
+  /* ---------- long division renderer (bus stop) ---------- */
+  .ld{display:inline-grid;font-family:'Space Mono',monospace;
+    font-size:clamp(1.5rem,5.5vw,2.2rem);font-weight:700;color:var(--ink);line-height:1.15}
+  .ld .cell{text-align:center;min-height:1.28em;padding:2px 0 0;position:relative}
+  .ld .qd{opacity:0;transform:translateY(4px);transition:opacity .35s ease,transform .35s ease}
+  .ld .qd.show{opacity:1;transform:none}
+  .ld .d{border-top:3px solid var(--ink)}
+  .ld .dvsr{text-align:right;padding-right:.32ch;white-space:nowrap;
+    border-top:3px solid transparent;border-right:3px solid var(--ink)}
+  .ld .d sup{position:absolute;top:-.02em;left:.12em;font-size:.5em;color:var(--mode);
+    font-weight:700;line-height:1}
+  .ld .cell.pt{color:var(--mode)}
+  .ld .colhi{background:var(--accent-soft)}
+  @media (prefers-reduced-motion:reduce){.ld .qd{transition:none}}
+
+  /* ---------- signature stepper (I do) ---------- */
   .sig-stage{display:flex;justify-content:center;padding:8px 0 4px}
-  .step-caption{background:var(--blush-soft);border:1px solid var(--blush);border-radius:12px;
+  .step-caption{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:12px;
     padding:14px 18px;min-height:64px;display:flex;align-items:center;
-    font-size:1.02rem;line-height:1.5;color:var(--plum-deep)}
-  .step-caption b{color:var(--pt)}
-  .stepdots{display:flex;gap:7px;justify-content:center;margin-top:4px}
-  .stepdots span{width:8px;height:8px;border-radius:50%;background:var(--line);transition:.25s}
-  .stepdots span.on{background:var(--plum);transform:scale(1.15)}
-  .sig-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    font-size:1.02rem;line-height:1.5;color:var(--accent-deep);margin-top:14px}
+  .step-caption b{color:var(--mode)}
+  .stepdots{display:flex;gap:7px;justify-content:center;margin-top:14px}
+  .stepdots span{width:8px;height:8px;border-radius:50%;background:var(--grid-strong);transition:.25s}
+  .stepdots span.on{background:var(--accent);transform:scale(1.15)}
+  .sig-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
 
-  /* gradual release tags */
-  .gr{font-family:"JetBrains Mono",monospace;font-size:.6rem;font-weight:700;letter-spacing:.12em;
-    text-transform:uppercase;padding:3px 9px;border-radius:999px;margin-right:9px;
-    display:inline-block;vertical-align:middle;color:#fff}
-  .gr.ido{background:var(--plum)} .gr.wedo{background:var(--pt)} .gr.youdo{background:var(--green)}
-
-  /* We do interactive */
-  .wedo-prompt{font-size:1.05rem;color:var(--plum-deep);font-weight:700;text-align:center;
-    margin:2px auto;max-width:54ch;min-height:2.6em;display:flex;align-items:center;justify-content:center}
+  /* ---------- we do interactive ---------- */
+  .wedo-prompt{font-size:1.05rem;color:var(--accent-deep);font-weight:700;text-align:center;
+    margin:14px auto 2px;max-width:54ch;min-height:2.6em;display:flex;align-items:center;justify-content:center}
   .wedo-options{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:2px}
-  .wedo-opt{font-family:"Nunito Sans",sans-serif;font-weight:800;font-size:1rem;border:2px solid var(--blush);
-    background:#fff;color:var(--plum-deep);border-radius:12px;padding:11px 20px;cursor:pointer;transition:.15s}
-  .wedo-opt:hover{border-color:var(--plum);background:var(--blush-soft)}
+  .wedo-opt{font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;border:2px solid var(--accent-line);
+    background:#fff;color:var(--accent-deep);border-radius:12px;padding:11px 20px;cursor:pointer;transition:.15s}
+  .wedo-opt:hover{border-color:var(--accent);background:var(--accent-soft)}
   .wedo-opt.wrong{border-color:var(--red);background:var(--red-bg);animation:wshake .3s}
   .wedo-opt.right{border-color:var(--green);background:var(--green-bg);color:var(--green)}
-  .wedo-fb{min-height:1.4em;text-align:center;font-weight:700;font-size:.98rem;margin-top:2px}
+  .wedo-fb{min-height:1.4em;text-align:center;font-weight:700;font-size:.98rem;margin-top:10px}
   .wedo-fb.ok{color:var(--green)} .wedo-fb.no{color:var(--red)}
   @keyframes wshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
   @media (prefers-reduced-motion:reduce){.wedo-opt.wrong{animation:none}}
 
-  /* ---------- Long division renderer (bus stop) ---------- */
-  .ld{display:inline-grid;font-family:"JetBrains Mono",monospace;
-    font-size:clamp(1.5rem,5.5vw,2.2rem);font-weight:700;color:var(--ink);line-height:1.15}
-  .ld .cell{text-align:center;min-height:1.28em;padding:2px 0 0;position:relative;
-    border:0;border-radius:0;background:none}
-  .ld .pad{border:0}
-  /* quotient digits sit above the overbar. Own class (qd) so they never pick up the
-     practice-question .q card styling. */
-  .ld .qd{opacity:0;transform:translateY(4px);transition:opacity .35s ease,transform .35s ease}
-  .ld .qd.show{opacity:1;transform:none}
-  /* the house: overbar is the top border of the dividend cells, the wall is the right
-     border of the divisor cell, so the corner always joins and no digit cell is narrowed */
-  .ld .d{border-top:3px solid var(--ink)}
-  .ld .dvsr{text-align:right;padding-right:.32ch;white-space:nowrap;
-    border-top:3px solid transparent;border-right:3px solid var(--ink)}
-  /* carry sits at the upper-left of the digit without taking layout width, so digits and
-     decimal points stay perfectly column-aligned */
-  .ld .d sup{position:absolute;top:-.02em;left:.12em;font-size:.5em;color:var(--pt);
-    font-weight:700;line-height:1}
-  .ld .cell.pt{color:var(--pt)}
-  .ld .colhi{background:rgba(203,89,66,.09)}
-  @media (prefers-reduced-motion:reduce){.ld .qd{transition:none}}
-
-  /* ---------- Learning intention ---------- */
-  .li{margin:22px 0 8px;background:var(--card);border:1px solid var(--line);
-    border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
-  .li-head{display:flex;gap:12px;align-items:center;padding:16px 20px;background:var(--plum);color:#fff}
-  .li-head h2{margin:0;font-family:"Fraunces",serif;font-weight:600;font-size:1.12rem}
-  .li-body{padding:6px 20px 18px}
-  .li-body p.intent{font-size:1.12rem;color:var(--plum-deep);font-weight:700;margin:16px 0 4px}
-  .sc-label{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--ink-soft);margin:14px 0 8px}
-  ul.sc{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-  ul.sc li{display:flex;gap:12px;align-items:flex-start}
-  .tick{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--plum);
-    background:#fff;cursor:pointer;display:grid;place-items:center;transition:.18s;margin-top:1px}
-  .tick svg{width:15px;height:15px;stroke:#fff;stroke-width:3.2;fill:none;
-    stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:.18s}
-  .tick.done{background:var(--plum);border-color:var(--plum)}
-  .tick.done svg{opacity:1}
-  ul.sc li.done span.txt{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--blush)}
-
-  /* ---------- Steps ---------- */
-  .step{position:relative;margin:26px 0;padding:24px 24px 24px 26px;background:var(--card);
-    border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-  .step::before{content:"";position:absolute;left:0;top:22px;bottom:22px;width:4px;border-radius:4px;background:var(--plum)}
-  .step-h{display:flex;gap:16px;align-items:center;margin-bottom:6px}
-  .num{flex:none;width:44px;height:44px;border-radius:12px;background:var(--blush-soft);
-    border:1px solid var(--blush);color:var(--plum);font-family:"Fraunces",serif;font-weight:700;
-    font-size:1.5rem;display:grid;place-items:center}
-  .step-h h2{margin:0;font-family:"Fraunces",serif;font-weight:600;font-size:1.4rem}
-  .step p{margin:.5em 0}
-  .step ul.plain{margin:.4em 0;padding-left:1.2em}
-  .step ul.plain li{margin:.25em 0}
-  .kbd{font-family:"JetBrains Mono",monospace;background:var(--blush-soft);border:1px solid var(--blush);
-    border-radius:6px;padding:1px 7px;font-size:.9em;color:var(--plum-deep);font-weight:700}
-
-  /* ---------- Method: step by step ---------- */
-  .method{margin-top:14px;display:grid;gap:12px;counter-reset:m}
-  .mstep{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;
-    background:#FdfBf8;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
-  .mstep .mn{counter-increment:m;flex:none;width:34px;height:34px;border-radius:9px;
-    background:var(--plum);color:#fff;font-family:"JetBrains Mono",monospace;font-weight:700;
-    display:grid;place-items:center;font-size:1rem}
-  .mstep .mn::before{content:counter(m)}
-  .mstep .mb b{color:var(--plum-deep)}
-  .mstep .mb{padding-top:3px}
-  .mstep .eg{font-family:"JetBrains Mono",monospace;background:var(--blush-soft);
-    border-radius:6px;padding:1px 6px;color:var(--plum-deep);font-weight:700;font-size:.92em;white-space:nowrap}
-
-  /* ---------- Worked examples ---------- */
-  .examples{display:grid;gap:16px;margin-top:16px}
+  /* ---------- worked examples ---------- */
+  .examples{display:grid;gap:16px;margin-top:8px}
   @media(min-width:620px){.examples{grid-template-columns:1fr 1fr}}
-  .ex{border:1px solid var(--line);border-radius:14px;padding:16px 14px;background:#fff;text-align:center}
+  .ex{border:1px solid var(--grid-strong);border-radius:14px;padding:16px 14px;background:#fff;text-align:center}
   .ex .cap{font-size:.9rem;color:var(--ink-soft);margin-bottom:10px}
-  .ex .cap b{color:var(--plum-deep)}
+  .ex .cap b{color:var(--accent-deep)}
   .ex .ld{font-size:1.7rem}
-  .ex.recurring{grid-column:1/-1;background:var(--blush-soft);border-color:var(--blush)}
-  .note{background:var(--blush-soft);border-left:4px solid var(--plum);border-radius:8px;
-    padding:12px 16px;margin-top:16px;font-size:.98rem}
+  .ex.recurring{grid-column:1/-1;background:var(--mode-soft);border-color:var(--mode-line)}
 
-  /* ---------- Tiers + questions ---------- */
-  .tierbar{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
-  .tierbtn{font-family:"Nunito Sans";font-weight:800;font-size:.9rem;border-radius:999px;
-    padding:8px 16px;cursor:pointer;border:2px solid;background:#fff;transition:.15s;display:flex;gap:8px;align-items:center}
-  .tierbtn .lamp{width:11px;height:11px;border-radius:50%}
-  .tierbtn.g{border-color:var(--green-line);color:var(--green)} .tierbtn.g .lamp{background:var(--green)}
-  .tierbtn.o{border-color:var(--amber-line);color:var(--amber)} .tierbtn.o .lamp{background:var(--amber)}
-  .tierbtn.r{border-color:var(--red-line);color:var(--red)} .tierbtn.r .lamp{background:var(--red)}
-  .tierbtn.g.active{background:var(--green-bg)} .tierbtn.o.active{background:var(--amber-bg)} .tierbtn.r.active{background:var(--red-bg)}
-  .tier-intro{font-size:.95rem;color:var(--ink-soft);margin:8px 0 2px}
+  /* ---------- practice: filter chips + tiered activities ---------- */
+  .filterbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:6px 0 22px}
+  .filterbar .lbl{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+  .chip{font-family:'Fredoka';font-weight:600;font-size:.86rem;cursor:pointer;border-radius:999px;
+    padding:7px 15px;border:1.5px solid var(--grid-strong);background:#fff;color:var(--ink-soft);
+    display:inline-flex;align-items:center;gap:8px;transition:.15s}
+  .chip .lt{width:11px;height:11px;border-radius:50%}
+  .chip[data-f="all"] .lt{background:linear-gradient(90deg,var(--green),var(--amber),var(--red))}
+  .chip[data-f="g"] .lt{background:var(--green)}
+  .chip[data-f="o"] .lt{background:var(--amber)}
+  .chip[data-f="r"] .lt{background:var(--red)}
+  .chip.on{color:var(--ink);border-color:var(--ink);box-shadow:var(--shadow)}
 
-  .q{border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;margin:14px 0;background:#fff}
-  .q.gt{border-left:5px solid var(--green)} .q.ot{border-left:5px solid var(--amber)} .q.rt{border-left:5px solid var(--red)}
+  .activity{border-radius:var(--radius);border:1px solid var(--grid-strong);background:#fff;
+    box-shadow:var(--shadow);padding:0;overflow:hidden;margin-bottom:18px}
+  .activity.hide{display:none}
+  .activity .head{padding:16px 22px;display:flex;align-items:center;gap:12px;color:#fff;flex-wrap:wrap}
+  .activity .head .tier{font-family:'Fredoka';font-weight:700;font-size:1.1rem;letter-spacing:.2px}
+  .activity .head .tag{margin-left:auto;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+    text-transform:uppercase;background:rgba(255,255,255,.22);padding:5px 10px;border-radius:999px}
+  .activity[data-tier="g"] .head{background:var(--green)}
+  .activity[data-tier="o"] .head{background:var(--amber)}
+  .activity[data-tier="r"] .head{background:var(--red)}
+  .activity .body{padding:20px 22px}
+  .activity[data-tier="g"] .body{background:var(--green-bg)}
+  .activity[data-tier="o"] .body{background:var(--amber-bg)}
+  .activity[data-tier="r"] .body{background:var(--red-bg)}
+  .tier-intro{font-size:.95rem;color:var(--ink-soft);margin:0 0 14px}
+
+  .q{border:1px solid var(--grid-strong);border-radius:14px;padding:16px 16px 14px;margin:0 0 14px;background:#fff}
+  .q:last-of-type{margin-bottom:0}
   .q .qhead{display:flex;gap:10px;align-items:baseline;margin-bottom:4px}
-  .q .qid{font-family:"JetBrains Mono",monospace;font-weight:700;font-size:.85rem;color:var(--plum)}
+  .q .qid{font-family:'Space Mono',monospace;font-weight:700;font-size:.85rem;color:var(--accent)}
   .q .qtext{font-weight:600}
   .answer-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
   .answer-row .op{font-weight:800;color:var(--ink-soft)}
-  .answer-row input{font-family:"JetBrains Mono",monospace;font-size:1.02rem;font-weight:700;
-    padding:9px 10px;border:2px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+  .answer-row input{font-family:'Space Mono',monospace;font-size:1.02rem;font-weight:700;
+    padding:9px 10px;border:2px solid var(--grid-strong);border-radius:10px;background:#fff;color:var(--ink)}
   .answer-row input.big{width:120px} .answer-row input.small{width:64px}
-  .answer-row input:focus{outline:none;border-color:var(--plum)}
+  .answer-row input:focus{outline:none;border-color:var(--accent)}
   .unit{color:var(--ink-soft);font-weight:700}
   .fb{font-weight:700;font-size:.95rem;display:none;flex-basis:100%;margin-top:2px}
   .fb.ok{display:block;color:var(--green)} .fb.no{display:block;color:var(--red)}
-  .working{margin-top:14px;padding:14px;border-radius:12px;background:var(--blush-soft);
-    border:1px dashed var(--blush);display:none;text-align:center}
+  .working{margin-top:14px;padding:14px;border-radius:12px;background:var(--accent-soft);
+    border:1px dashed var(--accent-line);display:none;text-align:center}
   .working.show{display:block}
   .working .ld{font-size:1.5rem}
-  .working .wtext{font-size:.92rem;color:var(--plum-deep);margin-top:10px;text-align:left}
-  .ansline{display:none;margin-top:10px;font-family:"JetBrains Mono",monospace;font-weight:700;
-    font-size:.98rem;color:var(--plum-deep)}
+  .working .wtext{font-size:.92rem;color:var(--accent-deep);margin-top:10px;text-align:left}
+  .ansline{display:none;margin-top:10px;font-family:'Space Mono',monospace;font-weight:700;
+    font-size:.98rem;color:var(--accent-deep)}
   .ansline.show{display:block}
   .ansline .lab{color:var(--ink-soft);font-weight:700;margin-right:6px}
-  .answers-control{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
-
-  /* ---------- Solutions ---------- */
-  .soltable{width:100%;border-collapse:collapse;margin-top:12px;font-size:.98rem}
-  .soltable th,.soltable td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
-  .soltable th{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
-  .soltable td.ans{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--plum-deep)}
   .reflect{margin-top:16px;background:var(--amber-bg);border:1px solid var(--amber-line);border-radius:12px;padding:14px 16px}
-  .reflect h4{margin:0 0 6px;color:var(--amber);font-family:"Fraunces",serif}
+  .reflect h4{margin:0 0 6px;color:var(--amber);font-family:'Fredoka'}
 
-  /* ---------- Exit ---------- */
-  .exit{background:linear-gradient(135deg,var(--plum),var(--plum-deep));color:#fff;border:none}
-  .exit::before{background:var(--blush)}
-  .exit .num{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.25);color:#fff}
-  .exit h2,.exit p{color:#fff}
-  .exit p{color:rgba(255,255,255,.9)}
-  .exit .btn-primary{background:#fff;color:var(--plum);margin-top:8px}
-  .exit .btn-primary:hover{background:var(--blush)}
+  /* ---------- exit / talk panel ---------- */
   .sc-mini{list-style:none;padding:0;margin:14px 0 4px;display:grid;gap:6px}
   .sc-mini li{display:flex;gap:10px;align-items:center;font-size:.98rem}
-  .sc-mini .m{width:20px;height:20px;border-radius:6px;border:2px solid rgba(255,255,255,.6);
+  .sc-mini .m{width:20px;height:20px;border-radius:6px;border:2px solid var(--accent-line);
     display:grid;place-items:center;cursor:pointer;flex:none}
   .sc-mini .m svg{width:12px;height:12px;stroke:#fff;stroke-width:3.4;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:0}
-  .sc-mini .m.done{background:rgba(255,255,255,.22)} .sc-mini .m.done svg{opacity:1}
+  .sc-mini .m.done{background:var(--accent);border-color:var(--accent)} .sc-mini .m.done svg{opacity:1}
+  .talk{margin-top:18px;background:var(--ink);color:#fff;border-radius:var(--radius);padding:18px 22px}
+  .talk b{color:#FFD24A;font-family:'Fredoka'}
+  .talk .btn{margin-top:12px;background:#fff;color:var(--accent);border-color:#fff}
+  .talk .btn:hover{background:var(--accent-soft)}
 
-  .btn{display:inline-flex;gap:8px;align-items:center;font-weight:700;font-size:.95rem;
-    border-radius:10px;padding:10px 16px;cursor:pointer;border:1px solid transparent;text-decoration:none;transition:.15s}
-  .btn-primary{background:var(--plum);color:#fff} .btn-primary:hover{background:var(--plum-deep)}
-  .btn-ghost{background:#fff;border-color:var(--plum);color:var(--plum)} .btn-ghost:hover{background:var(--blush-soft)}
-  .btn:disabled{opacity:.4;cursor:not-allowed}
-  .btn-link{background:var(--pt);color:#fff} .btn-link:hover{filter:brightness(.94)}
-
-  footer{text-align:center;color:var(--ink-soft);font-size:.82rem;margin-top:40px;
-    font-family:"JetBrains Mono",monospace;letter-spacing:.05em}
+  footer{padding:34px 0 60px;color:var(--ink-faint);font-size:.85rem;text-align:center}
+  .curric{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--ink-faint);margin-top:4px}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
 </style>
 </head>
-<body>
-<div class="wrap">
+<body class="teacher">
 
-  <!-- HERO -->
-  <header>
-    <div class="eyebrow"><span>Year 5 Mathematics</span><span class="dot"></span><span>Number</span><span class="dot"></span><span>Lesson 5.4</span></div>
-    <h1>Writing Remainders as Decimals<span class="pt-mark">.</span></h1>
-    <p class="subhead">When a division does not come out evenly, we do not have to stop at a remainder. We can keep going into the decimal places and find an exact answer.</p>
-  </header>
+<header class="bar">
+  <div class="bar-inner">
+    <div class="brand"><span class="glyph"><i></i><i></i><i></i></span> Writing Remainders as Decimals</div>
+    <nav class="jump">
+      <a href="#learn">Learn</a>
+      <a href="#walkthrough">Walkthrough</a>
+      <a href="#wedo">We do</a>
+      <a href="#practice">Practice</a>
+      <a href="#exit">Exit ticket</a>
+    </nav>
+    <button class="tview" id="tview" aria-pressed="true">
+      <span class="dot"></span><span id="tviewlabel">Teacher notes: on</span>
+    </button>
+  </div>
+</header>
 
-  <!-- LEARNING INTENTION (top of page) -->
-  <section class="li">
-    <div class="li-head">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
-      <h2>What we are learning</h2>
-    </div>
-    <div class="li-body">
-      <p class="intent">We are learning to write remainders as decimals.</p>
-      <p class="sc-label">Success criteria &middot; tap each one as you master it</p>
-      <ul class="sc" id="scList">
-        <li><button class="tick" aria-label="tick"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></button><span class="txt">I can perform the short or long division algorithm.</span></li>
-        <li><button class="tick" aria-label="tick"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></button><span class="txt">I know where to put the decimal point in the result.</span></li>
-        <li><button class="tick" aria-label="tick"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></button><span class="txt">I can add zeros to enable division into decimal places.</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- SIGNATURE STEPPER -->
-  <section class="signature">
-    <div class="sig-top"><h2><span class="gr ido">I do</span>Watch the decimal point land</h2><span class="hint">431 &divide; 4, one step at a time</span></div>
-    <div class="sig-body">
-      <div class="sig-stage"><div id="stepper"></div></div>
-      <div class="step-caption" id="caption"></div>
-      <div class="stepdots" id="dots"></div>
-      <div class="sig-controls">
-        <button class="btn btn-ghost" id="backBtn">Back</button>
-        <button class="btn btn-primary" id="nextBtn">Next step</button>
-        <button class="btn btn-ghost" id="resetBtn">Start again</button>
+<div class="wrap hero">
+  <div class="eyebrow-row">
+    <div class="eyebrow">Year 5 Mathematics · Number</div>
+    <span class="badge">Lesson 5.4</span>
+  </div>
+  <h1><span class="mode">Writing Remainders</span> <span class="green">as Decimals</span></h1>
+  <div class="hero-grid">
+    <div>
+      <p class="lead" style="margin-top:22px">When a division does not come out evenly, we do not have to stop at a remainder. We can keep going into the decimal places and find an exact answer.</p>
+      <div class="btnrow">
+        <a class="btn" href="#walkthrough">Start the walkthrough</a>
+        <a class="btn ghost" href="#practice">Jump to practice</a>
       </div>
     </div>
-  </section>
-
-  <!-- STEP 1 -->
-  <section class="step">
-    <div class="step-h"><div class="num">1</div><h2>Learn the method</h2></div>
-    <p>A remainder is really a division that has not finished yet. Instead of stopping and writing a remainder, we keep dividing into the decimal places until the division ends. Here is the method, step by step. Replay the stepper at the top of the page to see it happen.</p>
-
-    <div class="method">
-      <div class="mstep"><div class="mn"></div><div class="mb"><b>Divide as usual.</b> Set up the bus stop and divide left to right, carrying any leftover to the next digit.</div></div>
-      <div class="mstep"><div class="mn"></div><div class="mb"><b>Do not stop at a remainder.</b> When there is a leftover at the end, add a decimal point in your answer, right above the point in the number.</div></div>
-      <div class="mstep"><div class="mn"></div><div class="mb"><b>Add a zero and keep dividing.</b> 431 is the same as <span class="eg">431.00</span>, so bring the leftover onto a zero and divide again after the point.</div></div>
-      <div class="mstep"><div class="mn"></div><div class="mb"><b>Stop when the leftover is zero.</b> Then the answer is exact. If the digits repeat forever, like <span class="eg">10 &divide; 3 = 3.3333...</span>, round the recurring decimal.</div></div>
+    <div class="hero-chart">
+      <div class="cap">431 &divide; 4 = 107.75</div>
+      <div id="heroDivision"></div>
     </div>
+  </div>
+</div>
 
-    <p class="sc-label" style="margin-top:22px">Worked examples</p>
+<!-- SUCCESS CRITERIA -->
+<section id="intent" class="wrap">
+  <div class="part-tag">Success criteria · I can…</div>
+  <h2>What we are learning</h2>
+  <div class="card">
+    <p style="margin-top:0;font-weight:700;color:var(--accent-deep)">We are learning to write remainders as decimals.</p>
+    <ul class="sc" id="scList">
+      <li><button class="tick" aria-label="tick"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></button><span class="txt">I can perform the short or long division algorithm.</span></li>
+      <li><button class="tick" aria-label="tick"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></button><span class="txt">I know where to put the decimal point in the result.</span></li>
+      <li><button class="tick" aria-label="tick"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></button><span class="txt">I can add zeros to enable division into decimal places.</span></li>
+    </ul>
+    <div class="teacher-note"><span class="pill">Teacher</span><b>Tap to track.</b> Students can tick these off as they master each skill — the same three criteria reappear on the exit ticket so they can check their own growth across the lesson.</div>
+  </div>
+</section>
+
+<!-- LEARN -->
+<section id="learn" class="wrap">
+  <div class="part-tag">Big idea · division with a remainder</div>
+  <h2>Learn the method</h2>
+  <div class="card">
+    <p style="margin-top:0">A remainder is really a division that has not finished yet. Instead of stopping and writing a remainder, we keep dividing into the decimal places until the division ends. Here is the method, step by step. Replay the walkthrough below to see it happen.</p>
+    <ol class="steps">
+      <li><b>Divide as usual.</b> Set up the bus stop and divide left to right, carrying any leftover to the next digit.</li>
+      <li><b>Do not stop at a remainder.</b> When there is a leftover at the end, add a decimal point in your answer, right above the point in the number.</li>
+      <li><b>Add a zero and keep dividing.</b> 431 is the same as <span class="eg">431.00</span>, so bring the leftover onto a zero and divide again after the point.</li>
+      <li><b>Stop when the leftover is zero.</b> Then the answer is exact. If the digits repeat forever, like <span class="eg">10 &divide; 3 = 3.3333...</span>, round the recurring decimal.</li>
+    </ol>
+    <div class="define"><b>The one rule to remember.</b> Line up the decimal point in your answer directly above the decimal point in the number you are dividing. Everything else is just ordinary division, carried on a little longer.</div>
+  </div>
+
+  <div class="card">
+    <h3>Worked examples</h3>
     <div class="examples" id="examples"></div>
+  </div>
+  <div class="teacher-note"><span class="pill">Teacher</span><b>Anchor on 431 &divide; 4.</b> It is the same example used in the walkthrough below, so students see the identical problem solved once as a demo and once at their own pace.</div>
+</section>
 
-    <div class="note"><b>The one rule to remember.</b> Line up the decimal point in your answer directly above the decimal point in the number you are dividing. Everything else is just ordinary division, carried on a little longer.</div>
-  </section>
-
-  <!-- WE DO -->
-  <section class="signature">
-    <div class="sig-top"><h2><span class="gr wedo">We do</span>Let's try one together</h2><span class="hint">9 &divide; 4, you guide each step</span></div>
-    <div class="sig-body">
-      <div class="sig-stage"><div id="wedoDiv"></div></div>
-      <div class="wedo-prompt" id="wedoPrompt"></div>
-      <div class="wedo-options" id="wedoOptions"></div>
-      <div class="wedo-fb" id="wedoFb"></div>
-      <div class="stepdots" id="wedoDots"></div>
+<!-- I DO: SIGNATURE STEPPER -->
+<section id="walkthrough" class="wrap">
+  <div class="part-tag">Signature walkthrough · I do</div>
+  <h2>Watch the decimal point land</h2>
+  <p class="lead">431 &divide; 4, one step at a time.</p>
+  <div class="card">
+    <div class="sig-stage"><div id="stepper"></div></div>
+    <div class="step-caption" id="caption"></div>
+    <div class="stepdots" id="dots"></div>
+    <div class="sig-controls">
+      <button class="btn ghost" id="backBtn">Back</button>
+      <button class="btn" id="nextBtn">Next step</button>
+      <button class="btn ghost" id="resetBtn">Start again</button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- STEP 3 -->
-  <section class="step">
-    <div class="step-h"><div class="num">2</div><h2>Must complete work <span class="gr youdo">You do</span></h2></div>
-    <p>Work through these in your maths book, then type your answers here to check as you go. Start on the colour that suits you, and push yourself up when you are ready. Everyone should complete Orange.</p>
+<!-- WE DO -->
+<section id="wedo" class="wrap">
+  <div class="part-tag">Guided practice · we do</div>
+  <h2>Let's try one together</h2>
+  <p class="lead">9 &divide; 4, you guide each step.</p>
+  <div class="card">
+    <div class="sig-stage"><div id="wedoDiv"></div></div>
+    <div class="wedo-prompt" id="wedoPrompt"></div>
+    <div class="wedo-options" id="wedoOptions"></div>
+    <div class="wedo-fb" id="wedoFb"></div>
+    <div class="stepdots" id="wedoDots"></div>
+  </div>
+</section>
 
-    <div class="tierbar" id="tierbar">
-      <button class="tierbtn g" data-tier="g"><span class="lamp"></span>Green &middot; build it up</button>
-      <button class="tierbtn o active" data-tier="o"><span class="lamp"></span>Orange &middot; core work</button>
-      <button class="tierbtn r" data-tier="r"><span class="lamp"></span>Red &middot; challenge</button>
+<!-- PRACTICE -->
+<section id="practice" class="wrap">
+  <div class="part-tag">Differentiated practice · you do</div>
+  <h2>Must complete work</h2>
+  <p class="lead">Work through these in your maths book, then type your answers here to check as you go. Start on the colour that suits you, and push yourself up when you are ready. Everyone should complete Orange.</p>
+
+  <div class="filterbar">
+    <span class="lbl">Show tier:</span>
+    <button class="chip on" data-f="all"><span class="lt"></span>All</button>
+    <button class="chip" data-f="g"><span class="lt"></span>Green</button>
+    <button class="chip" data-f="o"><span class="lt"></span>Orange</button>
+    <button class="chip" data-f="r"><span class="lt"></span>Red</button>
+  </div>
+
+  <div class="activity" data-tier="g">
+    <div class="head"><span class="tier">🟢 Green</span> Build it up <span class="tag" id="tagG"></span></div>
+    <div class="body">
+      <p class="tier-intro" id="introG"></p>
+      <div id="qGreen"></div>
+      <div class="btnrow"><button class="btn sm ghost reveal" data-tier="g">Reveal answers</button></div>
     </div>
-    <p class="tier-intro" id="tierIntro"></p>
-    <div id="questions"></div>
+  </div>
 
-    <div class="answers-control">
-      <button class="btn btn-ghost" id="showAllBtn">Show answers</button>
+  <div class="activity" data-tier="o">
+    <div class="head"><span class="tier">🟠 Orange</span> Core work <span class="tag" id="tagO"></span></div>
+    <div class="body">
+      <p class="tier-intro" id="introO"></p>
+      <div id="qOrange"></div>
+      <div class="btnrow"><button class="btn sm ghost reveal" data-tier="o">Reveal answers</button></div>
     </div>
-    <div class="reflect" style="margin-top:16px">
-      <h4>If you got one wrong</h4>
-      <p style="margin:0">Write a quick reflection in your book. What went wrong: the algorithm, the decimal point, or forgetting to add a zero? Then have another go. Getting stuck and trying again is how the learning sticks.</p>
-    </div>
-  </section>
+  </div>
 
-  <!-- STEP 4 -->
-  <section class="step exit">
-    <div class="step-h"><div class="num">3</div><h2>Exit ticket</h2></div>
-    <p>Look back at the success criteria. Can you tick off all three boxes now?</p>
+  <div class="activity" data-tier="r">
+    <div class="head"><span class="tier">🔴 Red</span> Challenge <span class="tag" id="tagR"></span></div>
+    <div class="body">
+      <p class="tier-intro" id="introR"></p>
+      <div id="qRed"></div>
+      <div class="btnrow"><button class="btn sm ghost reveal" data-tier="r">Reveal answers</button></div>
+    </div>
+  </div>
+
+  <div class="reflect">
+    <h4>If you got one wrong</h4>
+    <p style="margin:0">Write a quick reflection in your book. What went wrong: the algorithm, the decimal point, or forgetting to add a zero? Then have another go. Getting stuck and trying again is how the learning sticks.</p>
+  </div>
+  <div class="teacher-note"><span class="pill">Teacher</span><b>Everyone touches Orange.</b> Green warms up with paired remainder/decimal answers; Red adds two-digit divisors and recurring decimals. Filter chips let you project just one tier at a time.</div>
+</section>
+
+<!-- EXIT TICKET -->
+<section id="exit" class="wrap">
+  <div class="part-tag">Exit ticket</div>
+  <h2>Check yourself</h2>
+  <div class="card">
+    <p style="margin-top:0">Look back at the success criteria. Can you tick off all three boxes now?</p>
     <ul class="sc-mini" id="scMini">
       <li><span class="m"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>I can perform the short or long division algorithm.</li>
       <li><span class="m"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>I know where to put the decimal point in the result.</li>
       <li><span class="m"><svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg></span>I can add zeros to enable division into decimal places.</li>
     </ul>
-    <p>When you are ready to move on to the next content area, complete your exit ticket on Mathspace.</p>
-    <a class="btn btn-primary" href="https://mathspace.co/student/tasks/CurriculumCustomTask-947528/" target="_blank" rel="noopener">Open the Mathspace exit ticket</a>
-  </section>
+    <div class="talk">
+      <b>Almost there.</b> When you are ready to move on to the next content area, complete your exit ticket on Mathspace.
+      <div><a class="btn" href="https://mathspace.co/student/tasks/CurriculumCustomTask-947528/" target="_blank" rel="noopener">Open the Mathspace exit ticket</a></div>
+    </div>
+    <div class="teacher-note"><span class="pill">Teacher</span>If several students are unsure on the decimal point placement, revisit the walkthrough as a whole class before sending them to Mathspace.</div>
+  </div>
+</section>
 
-  <footer>Victorian Curriculum 2.0 &middot; Number &middot; Lesson 5.4</footer>
-</div>
+<footer class="wrap">
+  Victorian Curriculum 2.0 · Number · Lesson 5.4
+  <div class="curric">Writing remainders as decimals</div>
+</footer>
 
 <script>
 /* ===== Long division renderer (proper bus-stop house) =====
@@ -357,15 +447,13 @@ function renderDivision(divisor, cols, revealed, hiCol, carryReveal){
   g.style.gridTemplateColumns='auto repeat('+N+', 1.5ch)';
   if(revealed===undefined) revealed=N;
   if(carryReveal===undefined) carryReveal=N;
-  // Row 1: pad over divisor + quotient digits
   g.appendChild(mkCell('cell pad'));
   cols.forEach((c,i)=>{
     const cell=mkCell('cell qd'+(c.q==='.'?' pt':'')+(i===hiCol?' colhi':''));
-    cell.textContent=c.q||'\u00A0';
+    cell.textContent=c.q||' ';
     if(i<revealed) cell.classList.add('show');
     g.appendChild(cell);
   });
-  // Row 2: divisor (carries the wall) + dividend digits (carry the overbar)
   g.appendChild(Object.assign(mkCell('cell dvsr'),{textContent:divisor}));
   cols.forEach((c,i)=>{
     const cell=mkCell('cell d'+(c.d==='.'?' pt':'')+(i===hiCol?' colhi':''));
@@ -375,6 +463,12 @@ function renderDivision(divisor, cols, revealed, hiCol, carryReveal){
   });
   return g;
 }
+
+/* ===== Hero: fully-solved 431 / 4 ===== */
+document.getElementById('heroDivision').appendChild(renderDivision('4', [
+  {d:'4', q:'1'}, {d:'3', q:'0'}, {d:'1', q:'7', c:'3'},
+  {d:'.', q:'.'}, {d:'0', q:'7', c:'3'}, {d:'0', q:'5', c:'2'}
+]));
 
 /* ===== Signature stepper: 431 / 4 ===== */
 const stepCols=[
@@ -446,7 +540,7 @@ const wedoStages=[
    options:['4','5','6'], answer:'5',
    right:'Perfect, and it divides exactly.'},
   {colsN:4, rev:4, done:true,
-   prompt:'You did it: 9 \u00F7 4 = 2.25. We just kept dividing into the zeros until nothing was left over.'}
+   prompt:'You did it: 9 ÷ 4 = 2.25. We just kept dividing into the zeros until nothing was left over.'}
 ];
 let ws=0;
 const wedoDiv=document.getElementById('wedoDiv');
@@ -465,7 +559,7 @@ function renderWedo(){
   [...wedoDots.children].forEach((d,i)=>d.classList.toggle('on', i<ws));
   if(st.done){
     const again=document.createElement('button');
-    again.className='btn btn-ghost'; again.textContent='Try it again';
+    again.className='btn ghost'; again.textContent='Try it again';
     again.onclick=()=>{ws=0; wedoFb.textContent=''; wedoFb.className='wedo-fb'; renderWedo();};
     wedoOptions.appendChild(again);
     return;
@@ -503,7 +597,7 @@ examples.forEach(e=>{
   const cap=document.createElement('div'); cap.className='cap'; cap.innerHTML=e.cap; d.appendChild(cap);
   d.appendChild(renderDivision(e.divisor,e.cols));
   if(e.recurring){const t=document.createElement('div');
-    t.style.cssText='font-family:JetBrains Mono,monospace;font-weight:700;margin-top:4px;color:var(--ink-soft)';
+    t.style.cssText='font-family:Space Mono,monospace;font-weight:700;margin-top:4px;color:var(--ink-soft)';
     t.textContent='the 3s go on forever'; d.appendChild(t);}
   exBox.appendChild(d);
 });
@@ -516,10 +610,10 @@ const questionData={
   g:{
     intro:'Green warms you up. Show each answer two ways, first as a remainder, then as a decimal, so you can see they mean the same thing.',
     items:[
-      {id:'G1', type:'remdec', text:'Calculate 10 \u00F7 4.', w:2,r:2,dec:2.5, divisor:'4', cols:[{d:'1',q:''},{d:'0',q:'2'},{d:'.',q:'.'},{d:'0',q:'5',c:'2'}], wtext:'10 &divide; 4 = 2 remainder 2. Then 20 tenths &divide; 4 = 5 tenths, giving 2.5.'},
-      {id:'G2', type:'remdec', text:'Calculate 12 \u00F7 5.', w:2,r:2,dec:2.4, divisor:'5', cols:[{d:'1',q:''},{d:'2',q:'2'},{d:'.',q:'.'},{d:'0',q:'4',c:'2'}], wtext:'12 &divide; 5 = 2 remainder 2. Then 20 tenths &divide; 5 = 4 tenths, giving 2.4.'},
-      {id:'G3', type:'remdec', text:'Calculate 20 \u00F7 8.', w:2,r:4,dec:2.5, divisor:'8', cols:[{d:'2',q:''},{d:'0',q:'2'},{d:'.',q:'.'},{d:'0',q:'5',c:'4'}], wtext:'20 &divide; 8 = 2 remainder 4. Then 40 tenths &divide; 8 = 5 tenths, giving 2.5.'},
-      {id:'G4', type:'remdec', text:'Calculate 27 \u00F7 6.', w:4,r:3,dec:4.5, divisor:'6', cols:[{d:'2',q:''},{d:'7',q:'4'},{d:'.',q:'.'},{d:'0',q:'5',c:'3'}], wtext:'27 &divide; 6 = 4 remainder 3. Then 30 tenths &divide; 6 = 5 tenths, giving 4.5.'},
+      {id:'G1', type:'remdec', text:'Calculate 10 ÷ 4.', w:2,r:2,dec:2.5, divisor:'4', cols:[{d:'1',q:''},{d:'0',q:'2'},{d:'.',q:'.'},{d:'0',q:'5',c:'2'}], wtext:'10 &divide; 4 = 2 remainder 2. Then 20 tenths &divide; 4 = 5 tenths, giving 2.5.'},
+      {id:'G2', type:'remdec', text:'Calculate 12 ÷ 5.', w:2,r:2,dec:2.4, divisor:'5', cols:[{d:'1',q:''},{d:'2',q:'2'},{d:'.',q:'.'},{d:'0',q:'4',c:'2'}], wtext:'12 &divide; 5 = 2 remainder 2. Then 20 tenths &divide; 5 = 4 tenths, giving 2.4.'},
+      {id:'G3', type:'remdec', text:'Calculate 20 ÷ 8.', w:2,r:4,dec:2.5, divisor:'8', cols:[{d:'2',q:''},{d:'0',q:'2'},{d:'.',q:'.'},{d:'0',q:'5',c:'4'}], wtext:'20 &divide; 8 = 2 remainder 4. Then 40 tenths &divide; 8 = 5 tenths, giving 2.5.'},
+      {id:'G4', type:'remdec', text:'Calculate 27 ÷ 6.', w:4,r:3,dec:4.5, divisor:'6', cols:[{d:'2',q:''},{d:'7',q:'4'},{d:'.',q:'.'},{d:'0',q:'5',c:'3'}], wtext:'27 &divide; 6 = 4 remainder 3. Then 30 tenths &divide; 6 = 5 tenths, giving 4.5.'},
       {id:'G5', type:'decimal', text:'A 9 metre rope is shared equally between 2 people. How long is each piece?', ans:4.5, unit:'m', divisor:'2', cols:[{d:'9',q:'4'},{d:'.',q:'.'},{d:'0',q:'5',c:'1'}], wtext:'9 &divide; 2 = 4 remainder 1, then 10 tenths &divide; 2 = 5 tenths.'}
     ]
   },
@@ -530,31 +624,28 @@ const questionData={
       {id:'Q3', type:'decimal', text:'Emily has 29 litres of paint to divide equally into 8 buckets. How many litres per bucket?', ans:3.625, unit:'L', divisor:'8', cols:[{d:'2',q:''},{d:'9',q:'3'},{d:'.',q:'.'},{d:'0',q:'6',c:'5'},{d:'0',q:'2',c:'2'},{d:'0',q:'5',c:'4'}], wtext:'29 &divide; 8 = 3 remainder 5, then carry through the decimals to reach 3.625.'},
       {id:'Q4', type:'decimal', text:'Sienna collected 108 kilograms of apples to divide into 5 equal bags. How many kilograms per bag?', ans:21.6, unit:'kg', divisor:'5', cols:[{d:'1',q:''},{d:'0',q:'2'},{d:'8',q:'1'},{d:'.',q:'.'},{d:'0',q:'6',c:'3'}], wtext:'108 &divide; 5 = 21 remainder 3, then 30 tenths &divide; 5 = 6 tenths.'},
       {id:'Q5', type:'decimal', money:true, text:'Harper earned $38 from selling lemonade over 4 equal days. How much did she earn per day?', ans:9.5, divisor:'4', cols:[{d:'3',q:''},{d:'8',q:'9'},{d:'.',q:'.'},{d:'0',q:'5',c:'2'}], wtext:'38 &divide; 4 = 9 remainder 2, then 20 &divide; 4 = 5, giving $9.50.'},
-      {id:'Q6', type:'remdec', text:'Calculate 15 \u00F7 4. Show it as a remainder and as a decimal.', w:3,r:3,dec:3.75, divisor:'4', cols:[{d:'1',q:''},{d:'5',q:'3'},{d:'.',q:'.'},{d:'0',q:'7',c:'3'},{d:'0',q:'5',c:'2'}], wtext:'15 &divide; 4 = 3 remainder 3, then 30 &divide; 4 = 7 remainder 2, then 20 &divide; 4 = 5.'},
+      {id:'Q6', type:'remdec', text:'Calculate 15 ÷ 4. Show it as a remainder and as a decimal.', w:3,r:3,dec:3.75, divisor:'4', cols:[{d:'1',q:''},{d:'5',q:'3'},{d:'.',q:'.'},{d:'0',q:'7',c:'3'},{d:'0',q:'5',c:'2'}], wtext:'15 &divide; 4 = 3 remainder 3, then 30 &divide; 4 = 7 remainder 2, then 20 &divide; 4 = 5.'},
       {id:'Q7', type:'decimal', text:'Mia pours 50 litres of juice equally into 8 jugs. How many litres go in each jug?', ans:6.25, unit:'L', divisor:'8', cols:[{d:'5',q:''},{d:'0',q:'6'},{d:'.',q:'.'},{d:'0',q:'2',c:'2'},{d:'0',q:'5',c:'4'}], wtext:'50 &divide; 8 = 6 remainder 2, then 20 &divide; 8 = 2 remainder 4, then 40 &divide; 8 = 5.'}
     ]
   },
   r:{
     intro:'Red stretches you with worded problems, two digit divisors, and recurring decimals. Show all of your working in your book.',
     items:[
-      {id:'R1', type:'decimal', text:'A 45 metre banner is shared equally among 12 classes. How long is each class\u2019s piece?', ans:3.75, unit:'m', divisor:'12', cols:[{d:'4',q:''},{d:'5',q:'3'},{d:'.',q:'.'},{d:'0',q:'7',c:'9'},{d:'0',q:'5',c:'6'}], wtext:'45 &divide; 12 = 3 remainder 9, then 90 &divide; 12 = 7 remainder 6, then 60 &divide; 12 = 5.'},
+      {id:'R1', type:'decimal', text:'A 45 metre banner is shared equally among 12 classes. How long is each class’s piece?', ans:3.75, unit:'m', divisor:'12', cols:[{d:'4',q:''},{d:'5',q:'3'},{d:'.',q:'.'},{d:'0',q:'7',c:'9'},{d:'0',q:'5',c:'6'}], wtext:'45 &divide; 12 = 3 remainder 9, then 90 &divide; 12 = 7 remainder 6, then 60 &divide; 12 = 5.'},
       {id:'R2', type:'decimal', recurring:true, text:'Three children share 10 pizzas equally. How many pizzas each? Round to two decimal places.', ans:3.33, unit:'pizzas', divisor:'3', cols:[{d:'1',q:''},{d:'0',q:'3'},{d:'.',q:'.'},{d:'0',q:'3',c:'1'},{d:'0',q:'3',c:'1'},{d:'0',q:'3',c:'1'}], wtext:'10 &divide; 3 = 3.3333... The 3s never stop, so we round to 3.33.'},
-      {id:'R3', type:'remdec', text:'Calculate 102 \u00F7 8. Show it as a remainder and as a decimal.', w:12,r:6,dec:12.75, divisor:'8', cols:[{d:'1',q:''},{d:'0',q:'1'},{d:'2',q:'2',c:'2'},{d:'.',q:'.'},{d:'0',q:'7',c:'6'},{d:'0',q:'5',c:'4'}], wtext:'102 &divide; 8 = 12 remainder 6, then carry through the decimals to reach 12.75.'},
-      {id:'R4', type:'remdec', text:'Calculate 43 \u00F7 8. Show it as a remainder and as a decimal.', w:5,r:3,dec:5.375, divisor:'8', cols:[{d:'4',q:''},{d:'3',q:'5'},{d:'.',q:'.'},{d:'0',q:'3',c:'3'},{d:'0',q:'7',c:'6'},{d:'0',q:'5',c:'4'}], wtext:'43 &divide; 8 = 5 remainder 3, then carry through the decimals to reach 5.375.'},
+      {id:'R3', type:'remdec', text:'Calculate 102 ÷ 8. Show it as a remainder and as a decimal.', w:12,r:6,dec:12.75, divisor:'8', cols:[{d:'1',q:''},{d:'0',q:'1'},{d:'2',q:'2',c:'2'},{d:'.',q:'.'},{d:'0',q:'7',c:'6'},{d:'0',q:'5',c:'4'}], wtext:'102 &divide; 8 = 12 remainder 6, then carry through the decimals to reach 12.75.'},
+      {id:'R4', type:'remdec', text:'Calculate 43 ÷ 8. Show it as a remainder and as a decimal.', w:5,r:3,dec:5.375, divisor:'8', cols:[{d:'4',q:''},{d:'3',q:'5'},{d:'.',q:'.'},{d:'0',q:'3',c:'3'},{d:'0',q:'7',c:'6'},{d:'0',q:'5',c:'4'}], wtext:'43 &divide; 8 = 5 remainder 3, then carry through the decimals to reach 5.375.'},
       {id:'R5', type:'decimal', text:'A 78 kilogram load is packed equally into 15 boxes. How many kilograms in each box?', ans:5.2, unit:'kg', divisor:'15', cols:[{d:'7',q:''},{d:'8',q:'5'},{d:'.',q:'.'},{d:'0',q:'2',c:'3'}], wtext:'78 &divide; 15 = 5 remainder 3, then 30 tenths &divide; 15 = 2 tenths.'},
       {id:'R6', type:'decimal', recurring:true, text:'A 100 metre rope is cut into 6 equal pieces. How long is each piece? Round to two decimal places.', ans:16.67, unit:'m', divisor:'6', cols:[{d:'1',q:''},{d:'0',q:'1'},{d:'0',q:'6',c:'4'},{d:'.',q:'.'},{d:'0',q:'6',c:'4'},{d:'0',q:'6',c:'4'},{d:'0',q:'6',c:'4'}], wtext:'100 &divide; 6 = 16.6666... The 6s never stop, so we round to 16.67.'}
     ]
   }
 };
 
-const qBox=document.getElementById('questions');
-const tierIntro=document.getElementById('tierIntro');
-const showAllBtn=document.getElementById('showAllBtn');
-let qControls=[];
-let answersShown=false;
+const qBoxes={g:document.getElementById('qGreen'), o:document.getElementById('qOrange'), r:document.getElementById('qRed')};
+const qControls={g:[], o:[], r:[]};
+const answersShown={g:false, o:false, r:false};
 
 function cleanNum(s){return s.replace(/[^0-9.\-]/g,'');}
-
 function fmtNum(n){ return Number.isInteger(n) ? String(n) : String(n); }
 function answerText(item){
   if(item.type==='remdec'){
@@ -566,21 +657,13 @@ function answerText(item){
   return s;
 }
 
-function setShowAll(state){
-  answersShown=state;
-  qControls.forEach(c=>state?c.reveal():c.hide());
-  showAllBtn.textContent=state?'Hide answers':'Show answers';
-}
-showAllBtn.addEventListener('click',()=>setShowAll(!answersShown));
-
 function buildTier(tier){
-  qBox.innerHTML='';
-  qControls=[];
+  const qBox=qBoxes[tier];
   const data=questionData[tier];
-  tierIntro.textContent=data.intro;
-  const cls=tier==='g'?'gt':tier==='o'?'ot':'rt';
+  document.getElementById('intro'+({g:'G',o:'O',r:'R'})[tier]).textContent=data.intro;
+  document.getElementById('tag'+({g:'G',o:'O',r:'R'})[tier]).textContent=data.items.length+' questions';
   data.items.forEach(item=>{
-    const q=document.createElement('div'); q.className='q '+cls;
+    const q=document.createElement('div'); q.className='q';
     let inputsHTML='';
     if(item.type==='remdec'){
       inputsHTML=
@@ -599,8 +682,8 @@ function buildTier(tier){
     q.innerHTML=
       '<div class="qhead"><span class="qid">'+item.id+'</span><span class="qtext">'+item.text+'</span></div>'+
       '<div class="answer-row">'+inputsHTML+
-        '<button class="btn btn-primary check">Check</button>'+
-        '<button class="btn btn-ghost showw">Show working</button>'+
+        '<button class="btn sm check">Check</button>'+
+        '<button class="btn sm ghost showw">Show working</button>'+
         '<span class="fb"></span>'+
       '</div>'+
       '<div class="ansline"></div>'+
@@ -651,8 +734,7 @@ function buildTier(tier){
       fillWorking(); working.classList.add('show'); showwBtn.textContent='Hide working';
     };
 
-    // controls used by the global "Show answers" button
-    qControls.push({
+    qControls[tier].push({
       reveal(){
         ansline.innerHTML='<span class="lab">Answer</span>'+answerText(item);
         ansline.classList.add('show');
@@ -665,17 +747,41 @@ function buildTier(tier){
     });
   });
 }
-buildTier('o');
+buildTier('g'); buildTier('o'); buildTier('r');
 
-document.getElementById('tierbar').addEventListener('click',e=>{
-  const btn=e.target.closest('.tierbtn'); if(!btn)return;
-  document.querySelectorAll('.tierbtn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  buildTier(btn.dataset.tier);
-  answersShown=false; showAllBtn.textContent='Show answers';
+document.querySelectorAll('.reveal').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const tier=btn.dataset.tier;
+    const state=!answersShown[tier];
+    answersShown[tier]=state;
+    qControls[tier].forEach(c=>state?c.reveal():c.hide());
+    btn.textContent=state?'Hide answers':'Reveal answers';
+  });
 });
 
-/* ===== Success criteria ticks ===== */
+/* ---------- tier filter ---------- */
+const chips=document.querySelectorAll('.chip');
+chips.forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    chips.forEach(c=>c.classList.remove('on'));
+    chip.classList.add('on');
+    const f=chip.dataset.f;
+    document.querySelectorAll('.activity').forEach(a=>{
+      a.classList.toggle('hide', !(f==='all'||a.dataset.tier===f));
+    });
+  });
+});
+
+/* ---------- teacher notes toggle ---------- */
+const tv=document.getElementById('tview'), lbl=document.getElementById('tviewlabel');
+tv.addEventListener('click',()=>{
+  const studentMode=document.body.classList.toggle('students');
+  document.body.classList.toggle('teacher',!studentMode);
+  tv.setAttribute('aria-pressed',String(!studentMode));
+  lbl.textContent=studentMode?'Teacher notes: off':'Teacher notes: on';
+});
+
+/* ---------- success criteria ticks ---------- */
 document.querySelectorAll('#scList .tick').forEach(t=>{
   t.addEventListener('click',()=>{t.classList.toggle('done');t.closest('li').classList.toggle('done',t.classList.contains('done'));});
 });
